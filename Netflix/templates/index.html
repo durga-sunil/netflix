@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Netflix Data Dashboard</title>
+ <style>
+   body { font-family: Arial, sans-serif; margin: 40px; }
+   table { border-collapse: collapse; width: 50%; margin-bottom: 40px; }
+   th, td { border: 1px solid #aaa; padding: 8px; text-align: left; }
+   th { background-color: #f2f2f2; }
+   h1, h2 { color: #333; }
+   .container { max-width: 800px; margin: auto; }
+   .filter-form { margin-bottom: 30px; }
+ </style>
+</head>
+<body>
+ <div class="container">
+   <h1>Netflix Data Dashboard</h1>
+   <form method="POST" class="filter-form">
+     <label for="content_type"><b>Filter by Content Type:</b></label>
+     <select name="content_type" id="content_type" onchange="this.form.submit()">
+       <option value="All" {% if selected_type == 'All' %}selected{% endif %}>All</option>
+       <option value="Movie" {% if selected_type == 'Movie' %}selected{% endif %}>Movie</option>
+       <option value="TV Show" {% if selected_type == 'TV Show' %}selected{% endif %}>TV Show</option>
+     </select>
+   </form>
+   <h2>Top 10 Directors{% if selected_type != "All" %} ({{selected_type}}s){% endif %}</h2>
+   <table>
+     <tr>
+       <th>Director</th>
+       <th>Count</th>
+     </tr>
+     {% for row in top_directors %}
+     <tr>
+       <td>{{ row.director }}</td>
+       <td>{{ row.count }}</td>
+     </tr>
+     {% endfor %}
+   </table>
+   <h2>Top 10 Countries{% if selected_type != "All" %} ({{selected_type}}s){% endif %}</h2>
+   <table>
+     <tr>
+       <th>Country</th>
+       <th>Count</th>
+     </tr>
+     {% for row in top_countries %}
+     <tr>
+       <td>{{ row.country }}</td>
+       <td>{{ row.count }}</td>
+     </tr>
+     {% endfor %}
+   </table>
+ </div>
+</body>
+</html>
